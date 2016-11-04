@@ -7,7 +7,7 @@
 while true; do
 
   LOGFILE="log-"$(date '+%d-%m-%Y-%H-%M-%S');
-  ./iSlave.py | tee ${LOGFILE}
+  ./iSecretary.py | tee ${LOGFILE}
 
   sleep 10
 done
