@@ -12,14 +12,20 @@ from datetime import datetime, date, time
 RHOST = "irc.example.com"
 RPORT = 6667
 RNICK = "fkolacek"
-RNAME = "Yet another slave"
-RCHANS = [ "example"]
+RNAME = "Yet another secretary"
+RCHANS = [ "#example" ]
 RMASTER_NICK = "FLC"
 RMASTER_NAME = "Franta"
 
+#---------------------------------------------
+# UserState
+#---------------------------------------------
 class UserState:
     New, Demanding = range(2)
 
+#---------------------------------------------
+# Brain
+#---------------------------------------------
 class Brain(object):
 
     counter = 1
@@ -28,7 +34,7 @@ class Brain(object):
     usersDates = {}
     userMessages = {}
 
-    stringIntroduce = "Greetings %s, I'm %s's slave. Unfortunatelly my master is not available at this very moment. Do you want to leave him a message? (Use !schedule_meeting if you want to contact him)"
+    stringIntroduce = "Greetings %s, I'm %s's secretary. Unfortunatelly my master is not available at this very moment. Do you want to leave him a message? (Use !schedule_meeting if you want to contact him)"
     stringScheduled = "Please stand by, my master is talking to someone else. He will respond to you as soon as possible (ticket number: %d)."
 
     def activate(self, nick, user, host, channel, message):
@@ -64,6 +70,9 @@ class Brain(object):
 
         return replies
 
+#---------------------------------------------
+# parseLine
+#---------------------------------------------
 def parseLine(rawLine):
     line = rawLine.strip()
 
@@ -101,14 +110,14 @@ def parseLine(rawLine):
     #WHATEVER
     else:
         print "[?] DEBUG: %s" % line
-
+#---------------------------------------------
+# Main
+#---------------------------------------------
 if __name__ == '__main__':
     IRC = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     print "[*] Connecting to: %s:%d" % (RHOST, RPORT)
-
     IRC.connect((RHOST, RPORT))
-
     print "[*] Connected"
 
     IRC.send("USER %s %s %s :%s\n" % (RNICK, RNICK, RNICK, RNAME))
@@ -125,6 +134,7 @@ if __name__ == '__main__':
     buffer = ""
     BRAIN = Brain()
 
+    print "[*] Started main loop"
     while True:
         buffer += IRC.recv(1024)
 
