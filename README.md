@@ -12,3 +12,7 @@ RCHANS = [ "#example" ]
 RMASTER_NICK = "FLC"
 RMASTER_NAME = "Franta"
 ~~~
+
+## TODO
+- Owner tracking
+- Message/User state expiration
